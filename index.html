@@ -1,0 +1,222 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>SFPD Dispatch Data Analysis</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="Chart.bundle.js"></script>
+		<script src="utils.js"></script>
+
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header">
+
+					<!-- Inner -->
+						<div class="inner">
+							<header>
+								<h1><a href="index.html" id="logo">SFPD Dispatch Data Analysis</a></h1>
+								<hr />
+								<p>made by Sophy Peng</p>
+							</header>
+							<footer>
+								<a href="#main" class="button circled scrolly">Start</a>
+							</footer>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="index.html">Home</a></li>
+								<li><a href="#main">SFPD Response Statistics</a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+			<!-- Main -->
+				<div id="main" class="wrapper style2">
+					<h2 style="text-align:center;padding-top:7%" >SFPD Response Statistics</h2>
+
+					<div style="width:60%; margin:auto;padding:5% 0">
+						<h3 style="text-align:center;"># of Calls Per Dispatch Type</h3>
+						<canvas id="piechart1"></canvas>
+					</div>
+				  <div style="width:60%; margin:auto;padding-bottom:5%">
+						<h3 style="text-align:center;">Avg Response Time (min) vs. Call Type</h3>
+						<canvas id="barchart2"></canvas>
+					</div>
+				  <div style="width:60%; margin:auto;padding-bottom:5%">
+						<h3 style="text-align:center;">Top 10 Zipcodes With the Most Calls</h3>
+						<canvas id="doughnutchart3"></canvas>
+					</div>
+
+					<script>
+				  var ctx = document.getElementById("piechart1");
+						var graph1 = new Chart(ctx,{
+							type: 'pie',
+							data: {
+				        datasets: [{
+				            data: [ 726, 11, 272, 981, 33, 1154, 3066, 168, 3589
+				            ],
+				            backgroundColor: [
+				                'rgba(255, 99, 132, 0.7)',
+				               'rgba(60, 180, 75, 0.7)',
+				               'rgba(240, 50, 230, 0.7)',
+				               'rgba(255, 206, 86, 0.7)',
+				               'rgba(128, 0, 0, 0.7)',
+				               'rgba(0, 130, 200, 0.7)',
+				               'rgba(153, 102, 255, 0.7)',
+				               'rgba(255, 159, 64, 0.7)',
+				               'rgba(70, 240, 240, 0.7)'
+
+
+				            ],
+				            label: 'Dataset 1'
+				        }],
+				        labels: [
+				            'Chief', 'Investigation',
+				            'Rescue Captain', 'Truck',
+				            'Support', 'Private', 'Medic',
+				            'Rescue Squad', 'Engine'
+				        ]
+				    },
+				    options: {
+				        responsive: true
+				    }
+				});
+
+				var ctx2 = document.getElementById("barchart2");
+				var graph2 = new Chart(ctx2, {
+				   type: 'bar',
+				   data: {
+				       labels: ["Potentially Life Threatening",
+				       "Non Life Threatening",
+				       "Fire", "Alarm"],
+				       datasets: [{
+				           label: 'Average Time to Respond',
+				           data: [3.45, 3.9833333, 9.3333333, 3.6333333],
+				           backgroundColor: [
+				               'rgba(255, 99, 132, 0.2)',
+				               'rgba(54, 162, 235, 0.2)',
+				               'rgba(153, 102, 255, 0.2)',
+				               'rgba(255, 159, 64, 0.2)'
+				           ],
+				           borderColor: [
+				               'rgba(255,99,132,1)',
+				               'rgba(54, 162, 235, 1)',
+				               'rgba(153, 102, 255, 1)',
+				               'rgba(255, 159, 64, 1)'
+				           ],
+				           borderWidth: 1
+				       }]
+				   },
+				   options: {
+				       scales: {
+				           yAxes: [{
+				               ticks: {
+				                   beginAtZero:true
+				               }
+				           }]
+				       }
+				   }
+				});
+
+				var ctx3 = document.getElementById("doughnutchart3");
+				var graph3 = new Chart(ctx3,{
+				type: 'doughnut',
+				data: {
+				datasets: [{
+				data: [
+				1347, 1153, 796, 788, 514, 449, 444, 398, 387, 380
+				],
+				backgroundColor: [
+				'rgba(255, 99, 132, 0.7)',
+				           'rgba(60, 180, 75, 0.7)',
+				           'rgba(240, 50, 230, 0.7)',
+				           'rgba(255, 206, 86, 0.7)',
+				           'rgba(128, 0, 0, 0.7)',
+				           'rgba(0, 130, 200, 0.7)',
+				           'rgba(153, 102, 255, 0.7)',
+				           'rgba(255, 159, 64, 0.7)',
+				           'rgba(70, 240, 240, 0.7)',
+				           'rgba(210, 245, 60, 0.7)'
+				],
+				label: 'Dataset 1'
+				}],
+				labels: ['94102', '94103', '94110', '94109', '94124', '94112', '94115', '94117', '94107', '94114']
+				},
+				options: {
+				responsive: true,
+				legend: {
+				position: 'top',
+				},
+				title: {
+				display: true,
+				},
+				animation: {
+				animateScale: true,
+				animateRotate: true
+				}
+				}
+				});
+
+						window.onload = function() {
+				      var ctx = document.getElementById('piechart1').getContext('2d');
+							window.myPie = new Chart(ctx, graph1);
+
+				      var ctx2 = document.getElementById('barchart2').getContext('2d');
+							window.myBar = new Chart(ctx2, graph2);
+
+				      var ctx3 = document.getElementById('doughnutchart3').getContext('2d');
+				        window.myDoughnut = new Chart(ctx3, graph3);
+
+						};
+
+
+
+					</script>
+
+				</div>
+
+
+
+			<!-- Footer -->
+				<div id="footer">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+
+								<!-- Contact -->
+									<section class="contact">
+										<header>
+											<h3>Want more information??</h3>
+										</header>
+										<p>Visit the <a href="https://sanfranciscopolice.org"> SFPD website</a> for more data and information</p>
+									</section>
+
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
